@@ -1,0 +1,47 @@
+#!/bin/bash
+# setup.sh
+
+# 0. main.rb が存在しなければ作成
+if [ ! -f main.rb ]; then
+  echo "#!/usr/bin/env ruby" > main.rb
+  chmod +x main.rb
+  echo "main.rb created."
+else
+  echo "main.rb already exists. Skipping creation."
+fi
+
+prev_content=""
+
+# sample1_input/sample1_output から sample5_input/sample5_output まで処理
+for i in {1..5}; do
+  input_file="sample${i}_input"
+  output_file="sample${i}_output"
+
+  # input ファイルの作成
+  if [ -f "$input_file" ]; then
+    echo "$input_file already exists. Skipping input creation."
+    prev_content=$(cat "$input_file")
+  else
+    read -p "Please copy ${input_file} and press Enter: " dummy
+    new_content=$(pbpaste)
+
+    # 2つ目以降の場合、前回の input と同じなら処理を終了
+    if [ "$i" -gt 1 ] && [ "$new_content" = "$prev_content" ]; then
+      echo "The input content is the same as the previous sample. Exiting processing."
+      exit 0
+    fi
+
+    echo "$new_content" > "$input_file"
+    echo "$input_file created from clipboard."
+    prev_content="$new_content"
+  fi
+
+  # output ファイルの作成
+  if [ -f "$output_file" ]; then
+    echo "$output_file already exists. Skipping output creation."
+  else
+    read -p "Please copy ${output_file} and press Enter: " dummy
+    pbpaste > "$output_file"
+    echo "$output_file created from clipboard."
+  fi
+done

@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# run_test.rb
+require 'minitest/autorun'
+
+class RunTest < Minitest::Test
+  (1..5).each do |i|
+    define_method("test_sample#{i}") do
+      input_file  = "sample#{i}_input"
+      output_file = "sample#{i}_output"
+
+      if File.exist?(input_file) && File.exist?(output_file)
+        # 末尾の改行・空白を除去して比較する
+        expected = File.read(output_file).rstrip
+        actual   = `cat #{input_file} | ruby main.rb`.rstrip
+
+        assert_equal expected, actual, "Output for #{input_file} does not match #{output_file}"
+      else
+        skip "Skipping sample#{i} because #{input_file} and/or #{output_file} does not exist."
+      end
+    end
+  end
+end
