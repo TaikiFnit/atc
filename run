@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
-# run_test.rb
 require 'minitest/autorun'
 
 class RunTest < Minitest::Test
   (1..5).each do |i|
     define_method("test_sample#{i}") do
-      input_file  = "sample#{i}_input"
+      input_file  = "sample#{i}"
       output_file = "sample#{i}_output"
 
       if File.exist?(input_file) && File.exist?(output_file)

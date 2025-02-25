@@ -3,8 +3,6 @@
 
 # 0. main.rb が存在しなければ作成
 if [ ! -f main.rb ]; then
-  echo "#!/usr/bin/env ruby" > main.rb
-  chmod +x main.rb
   echo "main.rb created."
 else
   echo "main.rb already exists. Skipping creation."
@@ -12,9 +10,9 @@ fi
 
 prev_content=""
 
-# sample1_input/sample1_output から sample5_input/sample5_output まで処理
+# sample1/sample1_output から sample5/sample5_output まで処理
 for i in {1..5}; do
-  input_file="sample${i}_input"
+  input_file="sample${i}"
   output_file="sample${i}_output"
 
   # input ファイルの作成
