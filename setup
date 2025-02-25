@@ -1,5 +1,4 @@
 #!/bin/bash
-# setup.sh
 
 # 0. main.rb が存在しなければ作成
 if [ ! -f main.rb ]; then
