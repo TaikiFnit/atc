@@ -7,6 +7,8 @@ else
   echo "main.rb already exists. Skipping creation."
 fi
 
+date +%s > start_time
+
 prev_content=""
 
 # sample1/sample1_output から sample5/sample5_output まで処理
@@ -42,3 +44,4 @@ for i in {1..5}; do
     echo "$output_file created from clipboard."
   fi
 done
+

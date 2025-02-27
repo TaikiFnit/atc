@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ ! -f start_time ]; then
+  echo "Error: start_time ファイルが見つかりません。"
+  exit 1
+fi
+
+start=$(cat start_time)
+end=$(date +%s)
+elapsed=$(( end - start ))
+
+hours=$(( elapsed / 3600 ))
+minutes=$(( (elapsed % 3600) / 60 ))
+seconds=$(( elapsed % 60 ))
+
+emojis=("🎉" "👏" "👍" "🏆" "🥳" "💪" "😄" "🤩")
+
+random_index=$(( RANDOM % ${#emojis[@]} ))
+emoji=${emojis[$random_index]}
+
+message=$(printf "%02d時間%02d分%02d秒で完了%s" "$hours" "$minutes" "$seconds" "$emoji")
+
+echo "$message"
+
+echo "$end" > end_time
